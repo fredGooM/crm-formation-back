@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:3000
+
+### Préparation - créer un apprenant
+# @name createApprenant
+POST {{baseUrl}}/api/apprenants
+Content-Type: application/json
+
+{
+  "email": "client+{{$timestamp}}@test.fr",
+  "nom": "Client",
+  "prenom": "Test"
+}
+
+### Préparation - créer une formation
+# @name createFormation
+POST {{baseUrl}}/api/formations
+Content-Type: application/json
+
+{
+  "titre": "Formation CRM {{$timestamp}}",
+  "prix": 990
+}
+
+### Commandes - Création
+# @name createCommande
+@apprenantId = {{createApprenant.response.body.id}}
+POST {{baseUrl}}/api/commandes
+Content-Type: application/json
+
+{
+  "apprenantId": {{apprenantId}},
+  "etat": "brouillon"
+}
+
+### Commandes - Ajouter formation
+@commandeId = {{createCommande.response.body.id}}
+@formationId = {{createFormation.response.body.id}}
+POST {{baseUrl}}/api/commandes/{{commandeId}}/lignes
+Content-Type: application/json
+
+{
+  "formationId": {{formationId}},
+  "quantite": 1
+}
+
+### Commandes - Liste (doit inclure apprenant + lignes + formation)
+GET {{baseUrl}}/api/commandes

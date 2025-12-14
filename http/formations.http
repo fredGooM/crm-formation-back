@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:3000
+
+### Formations - Liste
+GET {{baseUrl}}/api/formations
+
+### Formations - Création
+# @name createFormation
+POST {{baseUrl}}/api/formations
+Content-Type: application/json
+
+{
+  "titre": "Formation TypeScript {{$timestamp}}",
+  "prix": 1200
+}
+
+### Formations - Détail
+@formationId = {{createFormation.response.body.id}}
+GET {{baseUrl}}/api/formations/{{formationId}}

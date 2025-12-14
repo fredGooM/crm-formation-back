@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+### Apprenants - Liste (doit répondre 200)
+GET {{baseUrl}}/api/apprenants
+
+### Apprenants - Création (doit répondre 201)
+# @name createApprenant
+POST {{baseUrl}}/api/apprenants
+Content-Type: application/json
+
+{
+  "email": "jean.dupont+{{$timestamp}}@test.fr",
+  "nom": "Dupont",
+  "prenom": "Jean"
+}
+
+### Apprenants - Détail (doit répondre 200)
+@apprenantId = {{createApprenant.response.body.id}}
+GET {{baseUrl}}/api/apprenants/{{apprenantId}}
