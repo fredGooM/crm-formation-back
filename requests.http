@@ -1,0 +1,90 @@
+@baseUrl = http://localhost:3000
+
+### Health
+GET {{baseUrl}}/health
+
+###
+
+### Apprenants - Liste
+GET {{baseUrl}}/api/apprenants
+
+###
+
+### Apprenants - Création
+POST {{baseUrl}}/api/apprenants
+Content-Type: application/json
+
+{
+  "email": "jean.dupont@test.fr",
+  "nom": "Dupont",
+  "prenom": "Jean"
+}
+
+POST {{baseUrl}}/api/apprenants
+Content-Type: application/json
+
+{
+  "email": "fred.guiot@gmail.fr",
+  "nom": "Guiot",
+  "prenom": "Fred"
+}
+
+###
+
+### Formations - Création
+POST {{baseUrl}}/api/formations
+Content-Type: application/json
+
+{
+  "titre": "Formation TypeScript",
+  "prix": 1200
+}
+
+POST {{baseUrl}}/api/formations
+Content-Type: application/json
+
+{
+  "titre": "Formation Training",
+  "prix": 2000
+}
+
+###
+
+### Commandes - Création
+POST {{baseUrl}}/api/commandes
+Content-Type: application/json
+
+{
+  "apprenantId": 1,
+  "etat": "brouillon"
+}
+
+POST {{baseUrl}}/api/commandes
+Content-Type: application/json
+
+{
+  "apprenantId": 1,
+  "etat": "payé"
+}
+###
+
+### Commandes - Ajouter formation
+POST {{baseUrl}}/api/commandes/1/lignes
+Content-Type: application/json
+
+{
+  "formationId": 1,
+  "quantite": 1
+}
+
+POST {{baseUrl}}/api/commandes/1/lignes
+Content-Type: application/json
+
+{
+  "formationId": 2,
+  "quantite": 2
+}
+###
+
+### Commandes - Liste
+GET {{baseUrl}}/api/commandes
