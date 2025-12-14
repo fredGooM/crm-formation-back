@@ -44,16 +44,21 @@ router.get("/:id", async (req, res) => {
  * }
  */
 router.post("/", async (req, res) => {
-  const { apprenantId, etat, lignes } = req.body ?? {};
+  const { apprenantId, etatEnvoi, etatPaiement, lignes } = req.body ?? {};
 
-  if (typeof apprenantId !== "number" || typeof etat !== "string") {
-    return res.status(400).json({ error: "apprenantId (number) et etat (string) requis" });
-  }
+if (
+  typeof apprenantId !== "number" ||
+  typeof etatEnvoi !== "string" ||
+  !["NON_PAYE", "PAYE"].includes(etatPaiement)
+) {
+  return res.status(400).json({ error: "champs invalides" });
+}
 
   const created = await prisma.commande.create({
     data: {
       apprenantId,
-      etat,
+      etatEnvoi,
+      etatPaiement,
       ...(Array.isArray(lignes) && lignes.length > 0
         ? {
             lignes: {
@@ -80,13 +85,15 @@ router.post("/", async (req, res) => {
  */
 router.patch("/:id", async (req, res) => {
   const id = Number(req.params.id);
-  const { etat, apprenantId } = req.body ?? {};
+const { etatEnvoi, etatPaiement } = req.body;
 
-  const updated = await prisma.commande.update({
-    where: { id },
-    data: {
-      ...(typeof etat === "string" ? { etat } : {}),
-      ...(typeof apprenantId === "number" ? { apprenantId } : {})
+const updated = await prisma.commande.update({
+  where: { id },
+  data: {
+    ...(typeof etatEnvoi === "string" ? { etatEnvoi } : {}),
+    ...(etatPaiement && ["NON_PAYE", "PAYE"].includes(etatPaiement)
+      ? { etatPaiement }
+      : {})
     },
     include: {
       apprenant: true,

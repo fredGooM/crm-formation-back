@@ -22,17 +22,23 @@ router.get("/:id", async (req, res) => {
 
 // POST /api/formations
 router.post("/", async (req, res) => {
-  const { titre, prix } = req.body ?? {};
-  if (typeof titre !== "string" || (typeof prix !== "string" && typeof prix !== "number")) {
-    return res.status(400).json({ error: "titre (string) et prix (number|string) requis" });
-  }
+const { titre, prix, formateur } = req.body;
 
-  const created = await prisma.formation.create({
-    data: {
-      titre,
-      prix: String(prix) // Decimal
-    }
-  });
+if (
+  typeof titre !== "string" ||
+  typeof formateur !== "string" ||
+  (typeof prix !== "string" && typeof prix !== "number")
+) {
+  return res.status(400).json({ error: "titre, formateur, prix requis" });
+}
+
+const created = await prisma.formation.create({
+  data: {
+    titre,
+    formateur,
+    prix: String(prix)
+  }
+});
 
   res.status(201).json(created);
 });

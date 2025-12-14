@@ -16,7 +16,8 @@ async function main() {
   const formation = await prisma.formation.create({
     data: {
       titre: "Formation TypeScript2",
-      prix: "1000"
+      prix: "1000",
+      formateur: "fred"
     }
   });
 
@@ -24,7 +25,8 @@ async function main() {
   const commande = await prisma.commande.create({
     data: {
       apprenantId: apprenant.id,
-      etat: "en cours",
+      etatEnvoi: "en cours",
+      etatPaiement: "PAYE",
       lignes: {
         create: {
           formationId: formation.id,

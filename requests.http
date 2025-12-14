@@ -15,18 +15,9 @@ POST {{baseUrl}}/api/apprenants
 Content-Type: application/json
 
 {
-  "email": "jean.dupont@test.fr",
-  "nom": "Dupont",
-  "prenom": "Jean"
-}
-
-POST {{baseUrl}}/api/apprenants
-Content-Type: application/json
-
-{
-  "email": "fred.guiot@gmail.fr",
-  "nom": "Guiot",
-  "prenom": "Fred"
+  "email": "fred.guiot@gmail.com",
+  "nom": "guiot",
+  "prenom": "fred"
 }
 
 ###
@@ -36,17 +27,10 @@ POST {{baseUrl}}/api/formations
 Content-Type: application/json
 
 {
-  "titre": "Formation TypeScript",
-  "prix": 1200
-}
-
-POST {{baseUrl}}/api/formations
-Content-Type: application/json
-
-{
   "titre": "Formation Training",
   "prix": 2000
 }
+
 
 ###
 
@@ -55,21 +39,12 @@ POST {{baseUrl}}/api/commandes
 Content-Type: application/json
 
 {
-  "apprenantId": 1,
-  "etat": "brouillon"
-}
-
-POST {{baseUrl}}/api/commandes
-Content-Type: application/json
-
-{
-  "apprenantId": 1,
+  "apprenantId": 2,
   "etat": "payé"
 }
-###
 
 ### Commandes - Ajouter formation
-POST {{baseUrl}}/api/commandes/1/lignes
+POST {{baseUrl}}/api/commandes/2/lignes
 Content-Type: application/json
 
 {
@@ -77,14 +52,14 @@ Content-Type: application/json
   "quantite": 1
 }
 
-POST {{baseUrl}}/api/commandes/1/lignes
-Content-Type: application/json
-
-{
-  "formationId": 2,
-  "quantite": 2
-}
 ###
 
 ### Commandes - Liste
 GET {{baseUrl}}/api/commandes
+
+
+### Commandes - Liste
+GET {{baseUrl}}/api/apprenants
+
+### Commandes - Liste
+GET {{baseUrl}}/api/formations

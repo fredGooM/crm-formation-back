@@ -18,7 +18,8 @@ Content-Type: application/json
 
 {
   "titre": "Formation CRM {{$timestamp}}",
-  "prix": 990
+  "prix": 990,
+  "formateur": "titi"
 }
 
 ### Commandes - Création
@@ -29,7 +30,8 @@ Content-Type: application/json
 
 {
   "apprenantId": {{apprenantId}},
-  "etat": "brouillon"
+  "etatEnvoi": "brouillon",
+  "etatPaiement" : "PAYE"
 }
 
 ### Commandes - Ajouter formation

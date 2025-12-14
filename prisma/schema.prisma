@@ -7,6 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum EtatPaiement {
+  NON_PAYE
+  PAYE
+}
+
 model Apprenant {
   id        Int        @id @default(autoincrement())
   email     String     @unique
@@ -22,6 +27,7 @@ model Formation {
   id        Int        @id @default(autoincrement())
   titre     String
   prix      Decimal    @db.Decimal(10, 2)
+  formateur String     // ✅ NOUVEAU
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
@@ -29,16 +35,17 @@ model Formation {
 }
 
 model Commande {
-  id          Int                   @id @default(autoincrement())
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @updatedAt
+  id            Int                   @id @default(autoincrement())
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
 
-  etat        String                // ex: "brouillon" | "payee" | "annulee" | etc.
+  etatEnvoi     String                // ✅ renommé
+  etatPaiement  EtatPaiement           // ✅ enum
 
-  apprenantId Int
-  apprenant   Apprenant             @relation(fields: [apprenantId], references: [id], onDelete: Restrict)
+  apprenantId   Int
+  apprenant     Apprenant              @relation(fields: [apprenantId], references: [id])
 
-  lignes      CommandeEnFormation[]
+  lignes        CommandeEnFormation[]
 }
 
 model CommandeEnFormation {

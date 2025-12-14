@@ -10,7 +10,8 @@ Content-Type: application/json
 
 {
   "titre": "Formation TypeScript {{$timestamp}}",
-  "prix": 1200
+  "prix": 1200,
+  "formateur" : "toto"
 }
 
 ### Formations - Détail
